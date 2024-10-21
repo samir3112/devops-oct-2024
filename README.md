@@ -118,3 +118,26 @@
 
 ## To destroy machine
    vagrant destroy
+
+## Git Steps
+   Create a token :: Settings -> Developer Settings -> Personal Access Token -> Token classic -> Generate New token -> Give all permissions
+
+   Save token to your local machine
+
+   Github -> Create a private repo -> Copy URL
+
+   On to you local machine, execute following instruction
+
+   Sample URL - https://github.com/cbagade/classdemo.git
+
+   git clone https://<user>:<token>@github.com/cbagade/classdemo.git
+
+   cd <your repo>
+
+   create some file
+
+   git add <file>
+
+   git commit -m "commit message"
+
+   git push -u origin main
