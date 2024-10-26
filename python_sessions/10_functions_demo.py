@@ -5,9 +5,12 @@
 # declaring callable variable i.e., function
 
 
+
 # defining function , won't execute anything, the function need a call to execute
 
 # functions with parameters
+
+
 
 
 # named arguments, called with no values, called with any value
@@ -17,7 +20,14 @@
 # collecting number of parameters with *args
 
 
+
 # global variable and local variable
+
+orange_price = 50
+
+def discounted_price(discount):
+    orange_price = 80
+    return (1 - discount)  * orange_price
 
 # global variable declared and used in function without having local vaariable
 # global variable declared and local variable used in function with same name

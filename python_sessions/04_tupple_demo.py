@@ -3,6 +3,7 @@
 # items are ordered and allow duplicates
 
 
+fruits = ("orange","apple","grape")
 
 # declaring tupple and printing
 
@@ -14,3 +15,5 @@
 
 
 # looping through with for loop
+for fruits_name in fruits:
+    print(f"{fruits_name}")

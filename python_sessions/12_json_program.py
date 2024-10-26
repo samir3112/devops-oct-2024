@@ -8,9 +8,24 @@ import json
 
 # sample dictionary and print type
 
+fruits_dict = {"oranges":100, "grapes":50}
+fruits_str = '{"oranges":100, "grapes":50}'
+
+print(f"{type(fruits_dict)}")
+print(f"{type(fruits_str)}")
+
+
+
 
 # sample json string (enclosed in single quotes) and print type
 # the type will actually be string but this is how data is exchanged between client-server
 
 
 # convert to dict with json.loads and print type
+
+
+fruits_json = json.loads(fruits_str)
+print(f"{type(fruits_json)}")
+
+fruits_json["banana"] = 100
+print(f"{fruits_json}")
