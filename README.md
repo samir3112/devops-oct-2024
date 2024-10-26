@@ -120,6 +120,8 @@
    vagrant destroy
 
 ## Git Steps
+
+```
    Create a token :: Settings -> Developer Settings -> Personal Access Token -> Token classic -> Generate New token -> Give all permissions
 
    Save token to your local machine
@@ -141,3 +143,4 @@
    git commit -m "commit message"
 
    git push -u origin main
+```
