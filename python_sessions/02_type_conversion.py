@@ -3,6 +3,10 @@
 
 # then do type conversion to number
 
+orange_price = "88"
+final_price = (1 - 0.10) * int(orange_price)
+print(f"{final_price} is price discount")
+
 
 
 # concatenate number to str with type conversion
