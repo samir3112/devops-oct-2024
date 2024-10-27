@@ -9,6 +9,27 @@ except will contain code, to be executed if code fails
 # lets use open function instead with open to demostrate in read mode
 # statements after error/problematic statement are not executed
 
+
+#with open("non existing", "r+") as f:
+#    f.read()
+
+f = None
+
+try:
+    f = open("non-existint-file.txt")
+except IOError as ioe:
+    print(f"Caight Exception in prog {ioe}")
+except Exception as ex:
+    print(f"Caight Exception in prog {ex}")
+finally:
+    print(f"finally block")
+    if f:
+        f.close()
+    
+
+print(f"after excpetion")
+
+
 # catching exception
 
 
