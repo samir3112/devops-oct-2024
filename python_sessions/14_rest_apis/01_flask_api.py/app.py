@@ -43,6 +43,16 @@ app = Flask(__name__)
 # create get greeting api and return message and http status code
 # define route at which this API would be called
 
+fruits = {"oranges":100,"banana":200}
+
+@app.get("/greetings")
+def greeting():
+    return "Welcome to DevOps session"
+
+@app.get("/fruits")
+def get_fruits():
+    return fruits
+
 
 # run python app  with flask run
 # Over browser http://localhost:5000/<path>
