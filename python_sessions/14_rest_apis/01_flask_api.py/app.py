@@ -49,9 +49,7 @@ fruits = {"oranges":100,"banana":200}
 def greeting():
     return "Welcome to DevOps session"
 
-@app.get("/fruits")
-def get_fruits():
-    return fruits
+
 
 
 # run python app  with flask run
@@ -76,6 +74,11 @@ def get_fruits():
 
 with open("../data/fruits_data.json", "r+") as json_file:
     json_data = json.load(json_file)
+    
+    
+@app.get("/fruits")
+def get_fruits():
+    return json_data, 200
 
 
 # update ../data/fruits_data.json
@@ -84,3 +87,12 @@ with open("../data/fruits_data.json", "r+") as json_file:
 # take user supplied data from request as request.get_json()
 # append to json_data (which is obtained from json.load() method
 # dump data to same file by with open in w+ mode and using json.dump(json_data, f) method
+
+
+@app.post("/fruits")
+def create_fruit():
+    request_json = request.get_json()
+    json_data.append(request_json)
+    with open("../data/fruits_data.json","w+") as f:
+        json.dump(json_data, f)
+    return "Data appended to file", 201

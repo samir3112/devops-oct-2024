@@ -37,8 +37,19 @@ fruits_coll = db.fruits_coll
 # change name of fruit from postmane and submit 3 to 4 requests
 # observe collection on atlas mongo
 
+@app.post("/fruits")
+def create_fruits():
+    request_data = request.get_json()
+    fruits_coll.insert_one(request_data)
+    return "Data is submitted for creation", 201
+
 
 # get from mongo
 # call find method of collection, fruits_coll and pass 2 json, 1 is blank and second where _id is false to return doc without _id
 # students should read doc to see diff versions of find method, like to return only few selected params
 # while returning call dumps() method to convert to json
+
+@app.get("/fruits")
+def get_fruits():
+    fruits_data = fruits_coll.find({},{'_id': False})
+    return dumps(fruits_data), 200
