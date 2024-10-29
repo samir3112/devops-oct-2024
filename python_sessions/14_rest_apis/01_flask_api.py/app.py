@@ -95,4 +95,4 @@ def create_fruit():
     json_data.append(request_json)
     with open("../data/fruits_data.json","w+") as f:
         json.dump(json_data, f)
-    return "Data appended to file", 201
+    return "Data appended to filee", 201
