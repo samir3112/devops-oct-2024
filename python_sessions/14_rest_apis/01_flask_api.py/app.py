@@ -86,7 +86,7 @@ def get_fruits():
 
 # take user supplied data from request as request.get_json()
 # append to json_data (which is obtained from json.load() method
-# dump data to same file by with open in w+ mode and using json.dump(json_data, f) method
+# dump data to same file by with open in w+ mode and using json.dump(json_data, f) methodd
 
 
 @app.post("/fruits")
