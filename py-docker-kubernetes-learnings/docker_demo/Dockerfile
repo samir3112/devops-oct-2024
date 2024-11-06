@@ -74,4 +74,9 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # http://localhost:5000/ (access application on host port which is mapped to container)
 
 # push docker image to docker hub
+
+# first step is to login to docker hub
+# docker login -u <docker_user_pass>
+# Then it will prompt for password
+# push image
 # docker push cbagade/py-first-prog:v1
