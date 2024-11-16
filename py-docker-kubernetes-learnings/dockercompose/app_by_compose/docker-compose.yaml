@@ -44,22 +44,20 @@ volumes:
 
 
 
-    # docker-compose up -d
+    # docker compose up -d
     # might face error with docker version
     # try and use DOCKER_BUILDKIT=0 docker-compose up --build -d
     # Everything inside 1 docker-compose file will be crated on same network
-    # GET http://localhost:5000/api/v1/fruits
-    # POST http://localhost:5000/api/v1/fruits
-    # {
-    #    "fruitName":"Banana",
-    #    "price": 89,
-    #    "oraganic": true
-    # }
-    # GET http://localhost:5000/api/v1/fruits
+    # GET DATA (fetch nothing)
+    # curl http://localhost:5000/api/v1/fruits 
+    # POST DATA
+    # curl 'http://localhost:5000/api/v1/fruits' --header 'Content-Type: application/json'  --data '{"fruitName":"Safarchand","from":"Kashmir","nutrients":"Vitamin B, Vitamin K","price":"210.50","organic":false,"description":"Safarchad is tasty fruit and keep doctor away"}'
+    # curl http://localhost:5000/api/v1/fruits 
 
-    # docker-compose down
-    # docker-compose up -d
-    # GET http://localhost:5000/api/v1/fruits (data should be available now)
+    # docker compose down
+    # docker compose up -d
+    # curl  http://localhost:5000/api/v1/fruits (data should be available now)
+    # docker compose down -v
 
 
 

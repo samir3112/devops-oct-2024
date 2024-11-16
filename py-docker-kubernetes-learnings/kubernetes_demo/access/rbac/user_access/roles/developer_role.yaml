@@ -1,0 +1,78 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: kube-learnings
+  name: pod-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create", "get", "list", "delete"]
+
+# to get values of apiGroups and resources, run following
+# kubectl api-resources
+# following command give version as v1, which is apiGroups and no need to mention
+# kubectl api-resources | grep pods
+
+# following command give version as storage.k8s.io/v1, which is apiGroups but need to mention only storage.k8s.io
+# kubectl api-resources | grep storageclasses
+
+# lets create a user and then bind this role to that user
+# kubernetes doesn't create user, need to managed outside
+# steps to create user
+
+# cd..
+# cd sonia
+# openssl genrsa -out sonia.key 2048
+# openssl req -new -key sonia.key -out myuser.csr -subj "/CN=sonia"
+# create a base64 encoded value for csr
+# cat sonia.csr | base64 | tr -d "\n"
+# replace as value of request key inside sonia_csr.yaml
+# kubectl apply -f sonia_csr.yaml
+# kubectl get csr
+# kubectl certificate approve sonia
+# kubectl get csr
+
+# check if user can do any action
+# kubectl auth can-i create pods -n kube-learnings --as sonia
+# kubectl auth can-i create pods -n default --as sonia
+# kubectl auth can-i create deployments -n kube-learnings --as sonia
+
+
+# create role
+# cd ..
+# cd roles
+# kubectl apply -f developer_role.yaml
+# kubectl get role
+
+# now bind role to user sonia
+# kubectl apply -f dev_rolebdg.yaml
+# kubectl get rolebindings
+
+# verify
+# kubectl auth can-i create pods -n kube-learnings --as sonia
+# kubectl auth can-i create pods -n default --as sonia
+# kubectl auth can-i create deployments -n kube-learnings --as sonia
+# kubectl delete -f dev_rolebdg.yaml -f developer_role.yaml
+
+
+# Imperataive way
+# kubectl create role pod_role --help
+# firts generate a dry run to verify
+# kubectl create role pod_role -n kube-learnings --resource pods --verb create,get,list,delete --dry-run=client -o yaml
+# actual creation
+# kubectl create role pod_role -n kube-learnings --resource pods --verb create,get,list,delete 
+# kubectl get role pod_role
+
+# kubectl create rolebinding pod_roldbdg --help
+# kubectl create rolebinding pod_roldbdg -n kube-learnings --user sonia --role pod_role --dry-run=client -o yaml
+# actual creation
+# kubectl create rolebinding pod_roldbdg -n kube-learnings --user sonia --role pod_role
+
+# verification
+# kubectl auth can-i create pods -n kube-learnings --as sonia
+# kubectl auth can-i create pods -n default --as sonia
+# kubectl auth can-i create deployments -n kube-learnings --as sonia
+
+# Delete
+# kubectl delete role pod-role
+# kubectl delete rolebinding pod_roldbdg

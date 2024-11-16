@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: app-3
+  name: app-3
+  namespace: kube-learnings
+spec:
+  serviceAccountName: pod-reader-sa
+  containers:
+  - image: cbagade/sc-demo:v1
+    name: app-3

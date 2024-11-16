@@ -21,11 +21,13 @@ volumes:
     # sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-$(uname -s)-$(uname -m) -o $DESTINATION
     # sudo chmod 755 $DESTINATION
 
-    # docker-compose up
+    # docker compose up
     # will pull mongo image and will start container
     # also docker volume ls
+    # # remove everything except volume
+    # docker compose down
     # in detached mode
-    # docker-compose up -d
+    # docker compose up -d
     # remove everything except volume
     # docker compose down
     # docker volume ls --> volume will be there

@@ -42,5 +42,6 @@ FROM ubuntu
 # docker run demo-cmdentry 'Dev Ops Team'
 
 # What if you want to overwrite executable written in ENTRYPOINT
+# entry point is overwritten with  printf and argument is supplied latter
 # docker run --entrypoint printf demo-cmdentry 'Dev Ops Team'
 # docker run --entrypoint printf demo-cmdentry 'Dev Ops Team\n'
