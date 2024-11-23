@@ -11,6 +11,9 @@ metadata:
   labels:
     app: second-app
     tier: front-end
+
+    app: third-app
+    tier: front-end
 spec:
   # container specification. Pod will have container inside
   containers:
