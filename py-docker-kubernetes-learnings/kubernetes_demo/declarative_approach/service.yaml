@@ -1,0 +1,57 @@
+# what service should have - the deployment which it want to expose, the port of pod and  port at which
+# application is running
+# pl refer https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/
+
+apiVersion: v1
+# k8 artifacts
+kind: Service
+# its own name
+metadata:
+  name: np-service
+# deployment specs
+spec:
+  # select pods with lable app: svc-demo (pods may have multiple labels)
+  # so selecting just app: svc-demo is targetting all the tiers in which this app can be placed
+  selector:
+    app: svc-demo
+  # ports specs
+  ports:
+    # IP protocol
+    - protocol: "TCP"
+      # port that will be exposed by this service
+      port: 80
+      # port number to access on the pods targeted by the service (mapped to application)
+      # optional field, if not provided, it is assumed to be same as port
+      targetPort: 5000
+      # to allow traffic inside  cluster
+      # optional, a free port between valid range is allocated
+      nodePort: 30008
+  # type of service
+  type: NodePort
+
+  # kubectl apply  -f svc_deployment.yaml
+  # ensure pods are in running state
+  # kubectl get pods -w 
+  # kubectl get pods -o wide
+  # curl http://<pod_ip>:5000/greetings
+  # kubectl delete  -f svc_deployment.yaml
+  # kubectl apply  -f svc_deployment.yaml
+  # ensure pods are in running state
+  # kubectl get pods -w 
+  # Note the IP might have changed this time
+  # kubectl get pods -o wide
+
+  # kubectl apply -f service.yaml
+  # kubectl get service
+
+  # kubectl get nodes -o wide
+  # get IP of any node and access
+  # curl http://<node_ip>:30008/greetings
+
+  # Mostly these nodes will be frontended with Load balancers , which got public IP
+  # In our case, all nodes are known to vagrant machine i.e., localhost and hence can be accessed via
+  # curl http://localhost:30008/greetings
+
+
+  # kubectl delete -f service.yaml
+  # kubectl apply -f svc_deployment.yaml

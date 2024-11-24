@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: middleware
+spec:
+  selector:
+    app: middleware
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 5000
+    nodePort: 30007
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: middleware
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: middleware
+    spec:
+      containers:
+      - name: middleware
+        image: cbagade/stas:v12
+        ports:
+          # container port (app will be exposed at 5000)
+          - containerPort: 5000
+        env:
+          # passing mongo pod to write to
+        - name: MONGO_ADDRESS_WRITE
+          value: "mongodb-0.mongodb.kube-learnings.svc.cluster.local" # <pod_name>.<headless_service_name>.<namespace>.svc.cluster.local
+          # passing mongo pod to read from
+        - name: MONGO_ADDRESS_READ
+          value: "mongodb-1.mongodb.kube-learnings.svc.cluster.local" # # <pod_name>.<headless_service_name>.<namespace>.svc.cluster.local
+        - name: MONGO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-init-creds
+              key: mongouser
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-init-creds
+              key: mongopassword
+  selector:
+    matchLabels:
+      app: middleware
+
+
+
+# main intention is to show each pod got its own PV
+# the replication of mongo is out of scope, kindly refer mongo doc for that
+
+# first define storage class
+# kubectl apply -f /py-docker-kubernetes-learnings/kubernetes_demo/k8_with_volumes/storage_classes/local-path-storage.yaml
+
+# docker build -t cbagade/stas:v11 .
+# docker push cbagade/stas:v11
+# kubectl apply -f mongo_deployment.yaml -f app_deployment.yaml
+# observe pods for mongo, created by statefulset
+# mongo pod is created 1 at a time and when existing one is in Running state , then only next is created
+# kubectl get pods -w
+# also see pvc and pv, 3 are created
+# kubectl get pvc
+# kubectl get pv
+
+# each pod got its own PV
+# unless replication is set, the data in 1 PV doesn't get replicate to other PVs
+
+# write to 1st pod
+# POST /mongodb-0/api/v1/fruits change port to 30007
+# GET /mongodb-0/api/v1/fruits change port to 30007
+# but if this is get from other PV, data won't come
+# GET /mongodb-1/api/v1/fruits change port to 30007
+
+# kubectl delete -f mongo_deployment.yaml -f app_deployment.yaml
+# kubectl delete all pvc
+# ensure pods, services, pvc and pv are deleted

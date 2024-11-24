@@ -1,0 +1,74 @@
+apiVersion: v1
+data:
+  mongopassword: Y2hhbmRyYQ== #echo -n "chandra" | base64
+  mongouser: YWRtaW51c2Vy #echo -n "adminuser" | base64
+kind: Secret
+metadata:
+  name: mongo-init-creds
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongodb
+  name: mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  # for headless service
+  clusterIP: None
+  selector:
+    app: mongodb
+  
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  # headless service name
+  serviceName: mongodb
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:4.4
+        ports:
+          # container port (app will be exposed at 27017)
+          - containerPort: 27017
+        args: ["--dbpath", "/data/db"]
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-data-dir
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-init-creds
+              key: mongouser
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-init-creds
+              key: mongopassword
+  selector:
+    matchLabels:
+      app: mongodb
+  # will create claim and bound PV to each mongo pod
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data-dir
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 1Gi
