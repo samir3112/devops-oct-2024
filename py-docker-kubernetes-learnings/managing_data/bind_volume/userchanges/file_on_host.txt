@@ -1,1 +1,0 @@
-Hi DevOps Team, this is demo for bind volume
