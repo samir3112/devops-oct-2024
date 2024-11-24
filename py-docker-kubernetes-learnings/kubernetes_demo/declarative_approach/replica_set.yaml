@@ -51,6 +51,6 @@ spec:
 # also 
 # kubectl scale --replicas=5 -f replica_set.yaml
 # or
-# kubectl scale --replicas=5 -f replicaset <replicaset_name>
+# kubectl scale --replicas=5 replicaset <replicaset_name>
 # Last 2 ways of scaling won't make changes permenant on original yaml file
 # One can scale based on load (advanced topic)

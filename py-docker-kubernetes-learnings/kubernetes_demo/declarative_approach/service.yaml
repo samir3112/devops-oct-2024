@@ -10,12 +10,10 @@ metadata:
   name: np-service
 # deployment specs
 spec:
-  # select pods with lable app: second-app (pods may have multiple labels)
-  # the pods in our case is having second label tier: backend
-  # the pods can also be placed say with label tier: another-backend
-  # so selecting just app: second-app is targetting all the tiers in which this app can be placed
+  # select pods with lable app: svc-demo (pods may have multiple labels)
+  # so selecting just app: svc-demo is targetting all the tiers in which this app can be placed
   selector:
-    app: second-app
+    app: svc-demo
   # ports specs
   ports:
     # IP protocol
@@ -31,28 +29,29 @@ spec:
   # type of service
   type: NodePort
 
-  # kubectl apply  -f pod_ip.yaml
-  # try to access curl http://localhost:30008/greetings -> Not accessible
+  # kubectl apply  -f svc_deployment.yaml
+  # ensure pods are in running state
+  # kubectl get pods -w 
+  # kubectl get pods -o wide
+  # curl http://<pod_ip>:5000/greetings
+  # kubectl delete  -f svc_deployment.yaml
+  # kubectl apply  -f svc_deployment.yaml
+  # ensure pods are in running state
+  # kubectl get pods -w 
+  # Note the IP might have changed this time
+  # kubectl get pods -o wide
+
   # kubectl apply -f service.yaml
-  # kubectl get services
+  # kubectl get service
+
+  # kubectl get nodes -o wide
+  # get IP of any node and access
+  # curl http://<node_ip>:30008/greetings
+
+  # Mostly these nodes will be frontended with Load balancers , which got public IP
+  # In our case, all nodes are known to vagrant machine i.e., localhost and hence can be accessed via
   # curl http://localhost:30008/greetings
-  # can also be accessed by node ip
-  # kubectl get nodes -o wide --> this will give IP of node
-  # kubectl get pods -o wide --> this will give which node pod is running on
-  # curl http://<worker_node_ip>:30010
-  # kubectl delete -f pod_ip.yaml
-  # kubectl apply -f pod_ip.yaml
-  # kubectl get pods --> pod might get differnt IP
-  # curl http://<worker_node_ip>:30010  --> Still same works
-  # There might be multiple instances of pods running across different nodes, which suggest pods should be accessible by 
-  # IP of any node (no matter which nod its running)
-  # Try with IP address of all nodes and it will work
-  # kubectl delete -f pod_ip.yaml
-  
 
-  # repeat same steps but instead pod
-  # kubectl apply -f deployment.yaml
 
-  # Finally cleanup
   # kubectl delete -f service.yaml
-  # kubectl apply -f deployment.yaml
+  # kubectl apply -f svc_deployment.yaml

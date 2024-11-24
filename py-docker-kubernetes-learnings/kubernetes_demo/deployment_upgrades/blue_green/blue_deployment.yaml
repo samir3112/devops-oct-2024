@@ -53,5 +53,5 @@ spec:
 # with CLI , the replicas in source repo file won't change
 
 # clean up
-# kubectl delete -f blue_deployment.yaml -f green_deployment.yaml -f service.yaml
+# kubectl delete -f green_deployment.yaml -f service.yaml
 
