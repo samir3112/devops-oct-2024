@@ -19,7 +19,7 @@ spec:
     # name of container
   - name: second-app-container
     # image of container
-    image: cbagade/pykubd-first-app:v5
+    image: samir3112/pykubd-first-app:v5
     # Policy for pulling image 
     # Always pulled from image-registry
     # IfNotPresent - Only pulled when not present locally
@@ -30,7 +30,7 @@ spec:
       # container port (app will be exposed at 5000)
       - containerPort: 5000
 
-# docker build -t cbagade/pykubd-first-app:v5 .
+# docker build -t samir3112/pykubd-first-app:v5 .
 # docker push cbagade/pykubd-first-app:v5
 # kubectl apply -f pod.yaml
 # kubectl get pods -w
