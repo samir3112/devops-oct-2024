@@ -13,7 +13,7 @@ spec:
     imagePullPolicy: Always
     env:
     - name: who_to_greet_env_var
-      value: DevOps Team
+      value: World
     
 
     
@@ -26,6 +26,7 @@ spec:
 # kubectl apply -f pod.yaml
 # kubectl get pods -w
 # kubectl expose --type=NodePort  pod  env-demo --port 5000 --name env-demo-svc
+# kubectl get svc
 # curl localhost:<node port>
 
 # kubectl delete pod env-demo

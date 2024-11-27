@@ -24,7 +24,7 @@ spec:
         ports:
           - containerPort: 5000
   # number of pods to be created
-  replicas: 3
+  replicas: 4
 
 
 # kubectl apply -f replication_controller.yaml

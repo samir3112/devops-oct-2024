@@ -58,13 +58,11 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # It will change
 
 
-
-
 # Calling this app
 # try curl http://localhost:5000/greetings -> fails
 # try to get IP Address of pod
 # kubectl get pod -o wide
-# try curl http://10.244.0.17:5000/greetings -> no response or fails
+# try curl http://172.16.140.89:5000/greetings
 # enter inside container
 # kubectl exec -it <pod> -- /bin/bash
 # curl http://10.244.0.17:5000/greetings -> success
@@ -72,32 +70,34 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 
 
 # Service
+# NodePort (can't specify exact nodeport on cli)
+# kubectl expose --type=NodePort deployment kube-setup --port 5000 --name kube-setup
+# nodeport will automatically be assigned
+# kubectl get svc
+# curl http://localhost:<nodeport>/greetings/error
+# observe pod going from error to running to error
+# kubectl get pods -w
+# the pods to running will go due to Deployment, it will try to bring up the pod
+# curl http://localhost:<nodeport>/greetings
+# this will ensure pod in running state
+# kubectl delete svc <svc_name>
+
+
 # ClusterIP
 # For pods to communicate with other pods within cluster
 # With ClusterIP service , pods can't be reached from outside
 # kubectl expose --type=ClusterIP  deployment kube-setup --port 5000 --name kube-setup
 # kubectl get svc
-# Get IP - kubectl get pods -o wide
-# curl http://<ip>:5000/greetings  ,  not accessible
+# Get IP of svc
+# curl http://<svc_ip>:5000/greetings  ,  accessible
 # Enter inside pod 
 # kubectl get pods
 # kubectl exec -it <pod_name> -- /bin/bash
-# curl http://<ip>:5000/greetings  ,  accessible (inside cluster)
+# curl http://<svc_ip>:5000/greetings  ,  accessible (inside cluster)
 # But again this will be reachable from within cluster, try entering pod and execute curl
 # kubectl get svc
 # kubectl delete svc <svc_name>
 
-# NodePort
-# kubectl expose --type=NodePort deployment kube-setup --port 5000 --name kube-setup  --overrides '{ "apiVersion": "v1","spec":{"ports": [{"port":80,"protocol":"TCP","targetPort":5000,"nodePort":30008}]}}'
-# first --port 5000 will be override
-# port:80 is port exposed by service
-# targetPort:5000 will be application port
-# nodeport is 30008
-# curl http://localhost:30008/greetings/error
-# observe pod going from error to running to error
-# the pods to running will go due to Deployment, it will try to bring up the pod
-# curl http://localhost:30008/greetings
-# this will ensure pod in running state
 
 
 # Scaling (open 3 terminal windows)
@@ -115,7 +115,7 @@ CMD ["flask", "run", "--host", "0.0.0.0"]
 # kubectl delete deployment kube-setup
 
 
-# Dashboard
+# Dashboard, At moment not working on vagrant
 # kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 # OR access URL in browser,  save the content in dashboard.yaml and kubectl apply -f dashboard.yaml
 # kubectl get pod -n kubernetes-dashboard

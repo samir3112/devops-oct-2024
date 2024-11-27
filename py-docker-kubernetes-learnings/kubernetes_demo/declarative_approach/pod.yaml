@@ -9,7 +9,6 @@ metadata:
   name: second-app
   # labels on pod
   labels:
-    app: second-app
     tier: front-end
 
     app: third-app

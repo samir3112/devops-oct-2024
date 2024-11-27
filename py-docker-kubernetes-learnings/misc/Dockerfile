@@ -34,8 +34,8 @@ FROM ubuntu
 # Both instructions complement each other
 # comment ENTRYPOINT above and UNCOMMENTS below instructions
 
-# ENTRYPOINT ["echo", "Hello"]
-# CMD ["World"]
+ENTRYPOINT ["echo", "Hello"]
+CMD ["World"]
 
 # docker build -t demo-cmdentry .
 # docker run demo-cmdentry

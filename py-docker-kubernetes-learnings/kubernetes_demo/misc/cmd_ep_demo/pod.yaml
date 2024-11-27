@@ -12,7 +12,7 @@ spec:
     image: cbagade/demo-cmdentry:v2
     imagePullPolicy: Always
     # to override executable written in entrypoint
-    command: ["printf"]
+    #command: ["printf"]
     # to override parameter written in command
     args: ["DevOps Team"]
 

@@ -8,9 +8,6 @@ services:
     command: [ --auth ]
     env_file:
       - ./env/mongo.env
-  #    environment:
-  #      - MONGO_INITDB_ROOT_USERNAME=chandra
-  #      - MONGO_INITDB_ROOT_PASSWORD=chandra
   middleware:
     container_name: middleware
     image: cbagade/middleware:v5
