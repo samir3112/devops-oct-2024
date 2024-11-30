@@ -20,4 +20,4 @@ spec:
   # because there is not coninuous application running there
   # why kubernetes always start is by its property restartPolicy which is set to Always by default
   # try setting this to value Never and pod will be im completed state
-  # 
+  # kubectl delete -f pod.yaml

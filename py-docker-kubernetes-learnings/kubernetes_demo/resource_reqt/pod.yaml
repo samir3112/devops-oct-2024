@@ -16,6 +16,9 @@ spec:
     resources:
       requests:
         memory: "256Mi"
+        # 1 count means total CPU processing power for one pod
+        # 0.5 will reserve half a CPU processing power for one pod
+        # .1m means 100 millicore of total CPU processing power for one pod
         cpu: 0.5
       limits:
         memory: "512Mi"
@@ -23,5 +26,6 @@ spec:
 
 # kubectl apply -f pod.yaml
 # kubectl get pods -w
-# kubectl top pods to see resource consumption
+# to see resource consumption
+# kubectl top pods
 # kubectl delete -f pod.yaml
