@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 # its own name
 metadata:
-  name: backend
+  name: mon-read-svc
 # deployment specs
 spec:
   # select pods with lable app: second-app (pods may have multiple labels)
@@ -11,7 +11,7 @@ spec:
   # the pods can also be placed say with label tier: another-backend
   # so selecting just app: second-app is targetting all the tiers in which this app can be placed
   selector:
-    app: second-app
+    app: readiness-app
   # ports specs
   ports:
   # IP protocol

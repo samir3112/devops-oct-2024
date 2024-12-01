@@ -43,17 +43,16 @@ spec:
 
 # kubectl delete -f pod.yaml
 # kubectl delete -f cm.yaml
+# kubectl delete svc cm-demo-svc
 # kubectl apply -f cm.yaml
 # kubectl apply -f pod_2.yaml
 # kubectl get pods -w
 # kubectl expose --type=NodePort  pod  cm-demo --port 5000 --name cm-demo-svc
+# kubectl get svc
 # curl localhost:<node port>/session
+# curl localhost:31908/session
 # kubectl delete configmap session-data
+# kubectl delete -f pod_2.yaml
+# kubectl delete svc cm-demo-svc
 
-# kubectl delete -f pod.yaml
-# create config map in declarative way
-# kubectl apply -f cm.yaml
-# kubectl apply -f pod.yaml
-# kubectl get pods -w
-# no need to define service again
-# curl localhost:<node port>/session
+# Try creating config map in declarative way

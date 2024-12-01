@@ -1,17 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: second-app-deployment
+  name: liveness-app-deployment
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        app: second-app
-        tier: backend
+        app: liveness-app
     spec:
       containers:
-      - name: second-app-container
+      - name: liveness-app-container
         image: cbagade/mon-setup:v1
         imagePullPolicy: Always
         ports:
@@ -20,20 +19,20 @@ spec:
         # For example, liveness probes could catch a deadlock, where an application is running,
         # but unable to make progress.
         # Restarting a container in such a state can help to make the application more available despite bugs
-        livenessProbe:
+#        livenessProbe:
           # will try to make a get request at path /greetings on port 5000 in a interval of 10 seconds
           # after 5 seconds, while container become stable (up/running)
-          httpGet:
-            path: /greetings
-            port: 5000
-          periodSeconds: 10
-          initialDelaySeconds: 5
+#          httpGet:
+#            path: /greetings
+#            port: 5000
+#          periodSeconds: 10
+#          initialDelaySeconds: 5
   selector:
     matchLabels:
-      app: second-app
-      tier: backend
+      app: liveness-app
 
 
+# ensure liveness probe is commented
 # kubectl apply -f liveness_deployment.yaml -f service.yaml
 
 # kubectl get pods -w
@@ -50,11 +49,17 @@ spec:
 # on other terminal
 # hit following API 3-4 times so that , both pods goes in deadlock mode
 # curl http://localhost:30008/lock
-# now try
+# now try on other terminal
 # curl http://localhost:30008/greetings
-# there won't be any response, since same lock is used in greetings method (observe app.py)
-# but observe
+# there won't be any response, since same lock is used in greetings method (observe app.py), though pods are un running state
+# uncomment liveness probe and repeat same process. This time you will observe pod getting restarted automatically
+# kubectl delete -f liveness_deployment.yaml -f service.yaml
+# kubectl apply  -f liveness_deployment.yaml -f service.yaml
+# one 1 terminal
 # kubectl get pods -w
+# on 2nd terminal
+# hit following API 3-4 times so that , both pods goes in deadlock mode
+# curl http://localhost:30008/lock
 # the liveness probe will also try /greetings and when it is not getting response it will restart pod
 # after restart try on other terminale
 # curl http://localhost:30008/greetings

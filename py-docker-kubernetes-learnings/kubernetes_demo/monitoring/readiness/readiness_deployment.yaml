@@ -1,34 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: second-app-deployment
+  name: readiness-app-deployment
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        app: second-app
-        tier: backend
+        app: readiness-app
     spec:
       containers:
-      - name: second-app-container
+      - name: readiness-app-container
         image: cbagade/mon-read:v1
         imagePullPolicy: Always
         ports:
           - containerPort: 5000        
         # k8 uses readiness probes to check if application is ready to serve user
         # Few application takes time to warm up, but if pod is ready, it won't be able to serve users
-        readinessProbe:
+#        readinessProbe:
           # will try to make a get request at path /ready on port 5000 in a interval of 5 seconds
-          httpGet:
-            path: /ready/check
-            port: 5000
-          periodSeconds: 25
-          initialDelaySeconds: 10
+#          httpGet:
+#            path: /ready/check
+#            port: 5000
+#          periodSeconds: 25 # after 25 sec the probe will hit again till container is ready to serve
+#          initialDelaySeconds: 10 # the probe will start after 10 sec
   selector:
     matchLabels:
-      app: second-app
-      tier: backend
+      app: readiness-app
+      
 
 
 # comment the readiness section
@@ -44,7 +43,9 @@ spec:
 # kubectl apply -f readiness_deployment.yaml -f service.yaml
 # kubectl get pods -w
 # this time, the containers are yet to get ready
-# Wait till containers get ready and hit 
+# Wait till containers get ready and hit  (this can be checked programatically)
+# if you call without getting container ready, then it will fail with same error message
+# We discussed about service LB. If the container is not ready, it is removed from LB , till it become ready again, can't demo in vagrant env
 # curl http://localhost:30008/greetings
 # this time response will be there
 

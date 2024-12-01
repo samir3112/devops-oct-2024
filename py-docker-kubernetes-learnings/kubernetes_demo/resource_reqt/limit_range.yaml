@@ -5,16 +5,16 @@ metadata:
   namespace: kube-learnings
 spec:
   limits:
-  - default:
+  - default:   # default limits if not specified
       cpu: 750m
       memory: 1Gi
-    defaultRequest:
+    defaultRequest: # default requests  if not specified
       cpu: 500m
       memory: 500Mi
-    max:
+    max: # if max is specified, then limit must be specified across all containers on the pod
       cpu: "2"
       memory: 2Gi
-    min:
+    min: # if min is specified, then request must be specified across all containers on the pod
       cpu: 100m
       memory: 500Mi
     type: Container

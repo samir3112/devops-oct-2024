@@ -17,9 +17,9 @@ spec:
   # ReadWriteOnce -> can be mounted as read write volume by multiple pods on single node, so pods should belong with single node
   # ReadOnlyMany -> can be mounted as read volume by multiple pods on multiple node, so multiple pods  on multiple nodes  can claim these (not available for host path)
   # ReadWriteMany -> can be mounted as read write volume by multiple pods on multiple node, so multiple pods  on multiple nodes  can claim these (not available for host path)
+  # A Kubernetes hostPath volume cannot be used by multiple pods because it mounts a directory directly from the host node, meaning each pod accessing the same hostPath would be accessing the same physical location on the host, leading to potential data corruption if multiple pods try to write to it simultaneously
   accessModes:
   - ReadWriteOnce
   # how the storage should be provisioned
-  # kubectl get sc
-  # kinD already configured this for us
+  # kubeadm is not showing this
   storageClassName: standard

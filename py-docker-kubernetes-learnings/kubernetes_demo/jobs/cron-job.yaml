@@ -7,7 +7,6 @@ spec:
   schedule: "*/1 * * * *"
   jobTemplate:
     spec:
-      completions: 3
       template:
         spec:
           containers:
@@ -18,6 +17,9 @@ spec:
 
     # kubectl apply -f cron-job.yaml
     # will spawn job after 1 min
-    # kubectl get jobs
+    # kubectl get cronjobs
+    # after every min job will be created
+    # kubectl get jobs -w
     # kubectl get pods
+    # kubectl delete -f cron-job.yaml
     
