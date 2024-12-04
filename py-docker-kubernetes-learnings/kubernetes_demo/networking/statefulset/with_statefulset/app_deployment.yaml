@@ -72,10 +72,17 @@ spec:
 # unless replication is set, the data in 1 PV doesn't get replicate to other PVs
 
 # write to 1st pod
-# POST /mongodb-0/api/v1/fruits change port to 30007
-# GET /mongodb-0/api/v1/fruits change port to 30007
+
+#  curl --location 'http://localhost:30007/mongodb-0/api/v1/fruits' \
+#   --header 'Content-Type: application/json' \
+#  --data '{"fruitName":"Apple","from":"Tamilnadu","nutrients":"Vitamin B, Vitamin K","price":"200.50","organic":true,"description":"An avocado is a bright green fruit with a large pit and dark leathery skin. They'\''re also known as alligator pears or butter fruit. Avocados are a favorite of the produce section. They'\''re the go-to ingredient for guacamole dips."}'
+
+# verify
+# curl 'http://localhost:30007/mongodb-0/api/v1/fruits'
+
+
 # but if this is get from other PV, data won't come
-# GET /mongodb-1/api/v1/fruits change port to 30007
+# curl 'http://localhost:30007/mongodb-1/api/v1/fruits'
 
 # kubectl delete -f mongo_deployment.yaml -f app_deployment.yaml
 # kubectl delete all pvc

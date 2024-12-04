@@ -47,14 +47,16 @@ spec:
 # cd user_api
 # docker build -t cbagade/pykub-demo-users:latest .
 # docker push cbagade/pykub-demo-users:latest
-# cd auth_api
+# cd ../auth_api
 # docker build -t cbagade/pykub-demo-auth:latest .
 # docker push cbagade/pykub-demo-auth:latest
-# cd ..
+# go to py-docker-kubernetes-learnings/kubernetes_demo/networking/pod_internal directory
 # kubectl apply -f app_deployment.yaml
 # kubectl logs <pod>  -> will show containers
 # kubectl logs <pod> -c users -f
 # kubectl logs <pod> -c auth -f --> on other terminal
+# curl -X POST 'http://localhost:30008/signup'
+
 # POST signup - http://localhost:30008/signup 
 # see logs printing messages
 # kubectl delete -f app_deployment.yaml
