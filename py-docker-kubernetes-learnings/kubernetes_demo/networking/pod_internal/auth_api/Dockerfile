@@ -24,8 +24,8 @@ COPY . .
 # for print statements
 ENV PYTHONUNBUFFERED=1
 
+ENTRYPOINT ["python", "app.py"]
 
-ENTRYPOINT python app.py
 
 
 # docker build -t cbagade/pykub-demo-auth:latest .

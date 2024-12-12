@@ -51,12 +51,25 @@ spec:
 # docker push cbagade/pymiddleware:v8
 # kubectl apply -f mongo_deployment.yaml -f app_deployment.yaml
 # kubectl get pods -w  (wait for pods to be in running state)
-# GET app_2 /api/v1/fruits change port to 30007
-# POST  app_2/api/v1/fruits change port to 30007
-# Verify the changes
-# GET  app_2/api/v1/fruits change port to 30007
+
+# following will fetch nothing
+# curl 'http://localhost:30007/api/v1/fruits'
+
+# post data 
+
+#  curl --location 'http://localhost:30007/api/v1/fruits' \
+#   --header 'Content-Type: application/json' \
+#  --data '{"fruitName":"Apple","from":"Tamilnadu","nutrients":"Vitamin B, Vitamin K","price":"200.50","organic":true,"description":"An avocado is a bright green fruit with a large pit and dark leathery skin. They'\''re also known as alligator pears or butter fruit. Avocados are a favorite of the produce section. They'\''re the go-to ingredient for guacamole dips."}'
+
+# verify
+# curl 'http://localhost:30007/api/v1/fruits'
+
+
+
 
 # kubectl delete -f mongo_deployment.yaml -f app_deployment.yaml
 # kubectl apply -f mongo_deployment.yaml -f app_deployment.yaml
-# GET app_2/api/v1/fruits change port to 30007
+# verify
+# curl 'http://localhost:30007/api/v1/fruits'
 # changes persisted
+# kubectl delete -f mongo_deployment.yaml -f app_deployment.yaml

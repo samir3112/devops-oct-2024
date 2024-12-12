@@ -23,12 +23,13 @@ rules:
 # cd..
 # cd sonia
 # openssl genrsa -out sonia.key 2048
-# openssl req -new -key sonia.key -out myuser.csr -subj "/CN=sonia"
+# openssl req -new -key sonia.key -out sonia.csr -subj "/CN=sonia"
 # create a base64 encoded value for csr
 # cat sonia.csr | base64 | tr -d "\n"
 # replace as value of request key inside sonia_csr.yaml
 # kubectl apply -f sonia_csr.yaml
 # kubectl get csr
+# the csr will be in pending state, lets approve
 # kubectl certificate approve sonia
 # kubectl get csr
 

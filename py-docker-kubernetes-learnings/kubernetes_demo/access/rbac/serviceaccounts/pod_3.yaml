@@ -8,5 +8,5 @@ metadata:
 spec:
   serviceAccountName: pod-reader-sa
   containers:
-  - image: cbagade/sc-demo:v1
+  - image: cbagade/sa-demo:v1
     name: app-3

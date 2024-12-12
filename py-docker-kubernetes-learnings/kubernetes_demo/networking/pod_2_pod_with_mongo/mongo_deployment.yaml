@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo
+        image: mongo:4.4
         ports:
           # container port (app will be exposed at 27017)
           - containerPort: 27017

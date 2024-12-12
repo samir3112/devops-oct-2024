@@ -24,7 +24,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 5000
-    nodePort: 30005
+    nodePort: 30008
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -86,6 +86,6 @@ spec:
 # look at env variables  and notice AUTH_SERVICE_SERVICE_HOST
 
 # kubectl logs <pod> -f --> for both auth and users pod
-# http://localhost:30005/signup 
-# http://localhost:30005/signup/svc
+# curl -X POST http://localhost:30008/signup 
+# curl -X POST http://localhost:30008/signup/svc
 # kubectl delete -f app_deployment.yaml

@@ -9,8 +9,8 @@ ENV PYTHONUNBUFFERED=1
 CMD ["flask", "run", "--host", "0.0.0.0"]
 
 
-# docker build -t cbagade/sc-demo:v1 .
-# docker push cbagade/sc-demo:v1
+# docker build -t cbagade/sa-demo:v1 .
+# docker push cbagade/sa-demo:v1
 
 # kubectl create -f pod_1.yaml -f pod_2.yaml
 # enter in pod 1
