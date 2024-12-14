@@ -1,0 +1,67 @@
+pipeline {
+    // The agent section configures on which nodes or machine the pipeline can be run. 
+    // Specifying  - agent any - means that Jenkins will run the job on any of the 
+    // available nodes 
+    agent any
+
+    // Docker credentials on Jenkins
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('DOCKER_TOKEN')
+    }
+
+    stages {
+       // this is not needed since this is done in Jenkins while
+       // creating pipeline from SCM
+       // but in case, this file need to be shared with someone else
+       // then making checkout is required
+
+        stage('checkout') {
+            steps {
+                git branch: 'main' ,credentialsId: 'GIT_TOKEN' ,url: 'https://github.com/cbagade/py-jenkins-learnings.git'
+            }
+        }
+
+        stage('Pre-cleanup') {
+            steps {
+                    sh 'cd py_continuous_integration; rm -rf ./__pycache__; rm -rf ./test/__pycache__;'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'cd py_continuous_integration; ls; pwd; python3 -m venv ~/py_envs; pwd; . ~/py_envs/bin/activate; pwd; pip install -r requirements.txt; pwd;'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'cd py_continuous_integration; ls; pwd; . ~/py_envs/bin/activate; pwd; python3 -m pytest;'
+            }
+        }
+
+        stage('BuildDockerImage') {
+            steps {
+                sh 'cd py_continuous_integration; . ~/py_envs/bin/activate; docker build -t cbagade/cont-i-img:v5 .'
+            }
+        }
+
+        stage('DockerLogin') {
+            steps {
+                sh 'cd py_continuous_integration; echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
+        stage('PushDockerImage') {
+            steps {
+                sh 'cd py_continuous_integration; docker push cbagade/cont-i-img:v5'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
+        }
+    }
+}
