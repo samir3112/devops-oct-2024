@@ -1,19 +1,22 @@
-# Use a base image with yum support
+# Step 1: Use a base image with yum support
 FROM amazonlinux:latest
 
-# Update the system and install Apache
+# Step 2: Update the system and install Apache
 RUN yum update -y && \
-    yum install -y httpd && \
+    yum install -y httpd
     
 
-# Set the working directory
+# Step 3: Set the working directory
 WORKDIR /var/www/html
 
-# Copy the custom index.html to the Apache document root
+# Step 4: Copy the index.html file to the document root
 COPY index.html /var/www/html/
 
-# Expose port 80
+# Step 5: Expose port 80
 EXPOSE 80
 
-# Set the entrypoint to run Apache in the foreground
+# Step 6: Set the entrypoint to run Apache in the foreground
 ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+
+# docker build -t samir3112/c-apache:v1 .
+# docker run -d -p 80:80 samir3112/c-apache:v1
