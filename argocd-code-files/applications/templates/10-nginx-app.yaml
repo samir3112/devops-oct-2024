@@ -14,7 +14,7 @@ spec:
   source:
     path: resources/nginxapp
     repoURL: https://github.com/cbagade/argocd-code
-    targetRevision: developer
+    targetRevision: code
   syncPolicy:
     automated:
       prune: true
